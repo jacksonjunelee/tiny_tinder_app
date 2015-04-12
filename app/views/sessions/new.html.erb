@@ -1,30 +1,29 @@
 <%= flash[:notice] %>
 
 <h1> Sign Up </h1>
-<%= form_for(@user, url: sessions_path) do |f|%>
+<%= form_for(@user, url: session_path, method: :post) do |f|%>
   <%= f.label :Username %>
-  <%= f.text_field 'username' %>
+  <%= f.text_field :username %>
+  <br>
 
   <%= f.label :Gender %>
+  <%= f.select :gender, "<option>Male</option><option>Female</option>".html_safe %>
+  <br>
 
+  <%= f.label "Interested Gender" %>
+  <%= f.select :interested_gender, "<option>Male</option><option>Female</option>".html_safe %>
+  <br>
 
-  <div>
-    <%= label_tag 'Gender' %>
-    <br>
-    <%= select_tag "gender", "<option>Male</option><option>Female</option>".html_safe %>
-  </div><br>
+  <%= f.label :Age %>
+  <%= f.select :age, options_for_select((16..50)) %>
+  <br>
 
-  <div>
-    <%= label_tag 'Age' %>
-    <br>
-    <%= select_tag "age", options_for_select((16..50)) %>
-  </div><br>
+  <%= f.label "Interested In"%>
+  <%= f.select :preferred_age, options_for_select((16..50)) %>
+  <br>
+  
+  <%= f.submit %>
 
-  <div>
-    <%= label_tag 'Interested In' %>
-    <br>
-    <%= select_tag "interested", options_for_select((16..40)) %>
-  </div><br>
-
-  <div><%= submit_tag 'Save' %></div>
 <% end %>
+<br>
+<%= link_to "Login", login_session_path %>

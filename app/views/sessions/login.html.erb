@@ -1,3 +1,12 @@
-<%= form_tag(sessions_path) do %>
+<%= flash[:notice] %>
+
+<h1> Sign In </h1>
+<%= form_tag(sign_in_session_path) do %>
+<div>
+   <%= label_tag :Username %>
+   <%= text_field_tag :username %>
+   <br>
+
+   <%= submit_tag 'Sign Up' %>
 
 <% end %>

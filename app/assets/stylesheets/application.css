@@ -13,3 +13,8 @@
  *= require_tree .
  *= require_self
  */
+
+.interestsDiv{
+  margin: 1rem 0 0 0;
+
+}

@@ -14,3 +14,20 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+$(function(){
+  delayInteractivity();
+  setTimeout(function(){
+    $('#flashMessage').empty();
+    $('.interestsDiv').show();
+  }, 3000);
+});
+
+// $("body").on('change', '#flashMessage', delayInteractivity)
+//
+function delayInteractivity() {
+  if ($('#flashMessage').text() !== "") {
+    console.log("mopo");
+    $('.interestsDiv').hide();
+  };
+}
