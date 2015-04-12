@@ -8,15 +8,27 @@ class User < ActiveRecord::Base
     interested_gender = self.interested_gender
     preferred_age = self.preferred_age
     preferred_age_range = preferred_age..(preferred_age+8)
-    interest = User.where({interested_gender: interested_gender,
+    # Find matches based on the user's input
+    interests = User.where({interested_gender: interested_gender,
                           preferred_age: preferred_age_range})
                    .where.not(id: self.id)
-                   .find_each(batch_size: 1) do |interest|
-                     if !self.interests.include?(interest) && !self.disinterests.include?(interest)
-                       interest
-                     end
-                   end
-                # .limit(1) if interest != nil
-    interest[0] if interest != nil
+    interested_users = []
+    interests.map do |interest|
+      # check if the user has "Yes" or "No" the person yet
+      if !(self.interests.include?(interest) || self.disinterests.include?(interest))
+        # maximize matches
+        if interest.interests.include?(self)
+          if rand > 0.4
+            interested_users.unshift(interest)
+          else
+            interested_users.push(interest)
+          end
+        else
+          interested_users.push(interest)
+        end
+      end
+    end
+    # return one to the user
+    interested_users[0] if interested_users != nil
   end
 end

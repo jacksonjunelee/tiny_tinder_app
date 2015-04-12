@@ -1,7 +1,7 @@
 class LikesController < ApplicationController
 
   def add_like_to_database
-    Like.create({user_id: session[:current_user_id], interest_id: params[:id], potential: 1})
+    Like.create({user_id: session[:current_user_id], interest_id: params[:id]})
     user = User.find(session[:current_user_id])
     interest_likes = User.find(params[:id]).interests
     if interest_likes.include?(user)

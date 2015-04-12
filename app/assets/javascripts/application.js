@@ -15,8 +15,19 @@
 //= require turbolinks
 //= require_tree .
 
-$(document).ready(function(){
+$(function(){
+  delayInteractivity();
   setTimeout(function(){
     $('#flashMessage').empty();
+    $('.interestsDiv').show();
   }, 3000);
- })
+});
+
+// $("body").on('change', '#flashMessage', delayInteractivity)
+//
+function delayInteractivity() {
+  if ($('#flashMessage').text() !== "") {
+    console.log("mopo");
+    $('.interestsDiv').hide();
+  };
+}
