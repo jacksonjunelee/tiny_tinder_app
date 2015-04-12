@@ -8,7 +8,14 @@
 </head>
 <body>
 
-<%= yield %>
+<% if session[:current_user_id] != nil %>
+  <div>
+    <label> Welcome <%= session[:username] %></label>
+    <label><%= link_to "Logout", session_path, method: :delete, id: "logout" %></label>
+  </div>
+<% end %>
+
+  <%= yield %>
 
 </body>
 </html>

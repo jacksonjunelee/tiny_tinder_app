@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-  before_action :confirm_logged_in, except: [:new, :login, :create, :logout]
 
   def new
     @user = User.new
@@ -10,64 +9,59 @@ class SessionsController < ApplicationController
     # login form
   end
 
+  def sign_in
+    @user = User.where(:username => params[:username])[0]
+    if !@user.nil?
+      session[:current_user_id] = @user.id
+      session[:username] = @user.username
+      redirect_to root_path
+    else
+      redirect_to new_session_path
+    end
+    #sign_in
+  end
+
   def create
-    if params[:Username].present?
-      user = User.where(:username => params[:Username])
+    if params[:user].present?
+      user = User.where(:username => params[:user][:username])
       if user.empty?
-        binding.pry
+        @user = User.new(user_params)
+        # if user_params[:interested_gender] == "Male"
+        #   @user.seeking_index = user_params[:preferred_age] + "m"
+        # else
+        #   @user.seeking_index = user_params[:preferred_age] + "f"
+        # end
+        # if user_params[:gender] == "Male"
+        #   @user.seeked_index = user_params[:age] + "m"
+        # else
+        #   @user.seeked_index = user_params[:age] + "f"
+        # end
+        if @user.save
+          session[:current_user_id] = @user.id
+          session[:username] = @user.username
+          redirect_to root_path
+        else
+          redirect_to new_session_path
+        end
       else
-        binding.pry
         flash[:notice] = "Someone has taken this Username"
-        redirect_to new_path
+        redirect_to new_session_path
         # authorized_user = found_user.authenticate(params[:password])
       end
     end
-    # if authorized_user
-    #   # mark user as logged in
-    #   session[:user_id] = authorized_user.id
-    #   session[:username] = authorized_user.username
-    #   flash[:notice] = "You are now logged in."
-    #   binding.pry
-    # else
-    #   binding.pry
-    #   flash[:notice] = "Invalid username/password combination."
-    #   redirect_to(:action => 'login')
-    # end
   end
 
-  def logout
+  def destroy
     # mark user as logged out
-    session[:user_id] = nil
-    session[:username] = nil
+    session[:current_user_id] = nil
     flash[:notice] = "Logged out"
     redirect_to(:action => "login")
   end
 
-  # def new
-  # end
-  #
-  # def create
-  #   user = User.find_by(username: params[:username])
-  #   if user && user.authenticate(params[:password])
-  #     session[:current_user_id] = user.id
-  #     redirect_to user
-  #   else
-  #     flash[:login_error] = "Password does not match log-in."
-  #     #renamed :login_error for clarity.
-  #     redirect_to login_path
-  #   end
-  #
-  # end
-  #
-  # def destroy
-  #   session[:current_user_id] = nil
-  #   redirect_to root_path
-  # end
-
   private
 
     def user_params
-      params.require(:user).permit
+      params.require(:user).permit(:username, :gender, :interested_gender, :age, :preferred_age)
     end
 
 

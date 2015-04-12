@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
   root "users#index"
-  get '/sessions/new' => 'sessions#new', as: :new
-  post '/sessions' => 'sessions#create'
-  get '/sessions/login' => 'sessions#login', as: :login
+  resource :session, only: [:new, :create, :destroy] do
+    collection do
+      get 'login'  => 'sessions#login', as: :login
+      post 'sign_in' => 'sessions#sign_in', as: :sign_in
+    end
+  end
+  post 'likes/:id' => 'likes#add_like_to_database', as: :add_like
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
