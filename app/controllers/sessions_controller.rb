@@ -26,16 +26,6 @@ class SessionsController < ApplicationController
       user = User.where(:username => params[:user][:username])
       if user.empty?
         @user = User.new(user_params)
-        # if user_params[:interested_gender] == "Male"
-        #   @user.seeking_index = user_params[:preferred_age] + "m"
-        # else
-        #   @user.seeking_index = user_params[:preferred_age] + "f"
-        # end
-        # if user_params[:gender] == "Male"
-        #   @user.seeked_index = user_params[:age] + "m"
-        # else
-        #   @user.seeked_index = user_params[:age] + "f"
-        # end
         if @user.save
           session[:current_user_id] = @user.id
           session[:username] = @user.username

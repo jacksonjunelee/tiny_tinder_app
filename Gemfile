@@ -38,6 +38,8 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec-rails', '~> 3.0'
   gem 'shoulda-matchers'
+  gem 'rspec-collection_matchers'
+  gem 'factory_girl_rails'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'

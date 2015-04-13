@@ -8,15 +8,5 @@ class UsersController < ApplicationController
       flash[:message] = "No more Matches"
     end
   end
-
-  def matches
-    @user = User.find(session[:current_user_id])
-    interests = @user.interests
-    @matches = []
-    interests.each do |match|
-      if match.interests.include?(@user)
-        matches.push(match)
-      end
-    end
-  end
+  
 end

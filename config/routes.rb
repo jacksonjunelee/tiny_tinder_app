@@ -8,7 +8,6 @@ Rails.application.routes.draw do
   end
   post 'likes/:id' => 'likes#add_like_to_database', as: :add_like
   post 'dislikes/:id' => 'dislikes#add_unlike_to_database', as: :add_unlike
-  get 'users/matches' => 'users#matches', as: :matches
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
