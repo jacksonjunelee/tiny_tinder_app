@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   has_many :interests, through: :likes
   has_many :disinterests, through: :dislikes
 
+  validates :username, presence: true
+
   def find_interest
     interested_gender = self.interested_gender
     preferred_age = self.preferred_age
